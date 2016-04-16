@@ -1,0 +1,108 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <!DOCTYPE html>
+        <meta charset="utf-8">
+        <title>Obilna Žlica</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/stylesheet.css' %}">
+        <meta name="author" content="Gregor Novak">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+        <!--Začetek HEADER-ja-->
+        <header>
+            <nav>
+                <a href="{% url 'zadnji_recepti' %}" id="site-name"><strong>Obilna</strong> žlica</a>
+                <ul>
+                    <li><a href="{% url 'zadnji_recepti' %}">Domov</a></li>
+                    <li><a href="{% url 'vsi_recepti' %}">Vsi recepti</a></li>
+                    <!--<form>
+                        <input id="search" type="text" placeholder="Nom nom" required>
+                        <input id="button" type="button" value="Išči">
+                    </form>-->
+                </ul>
+            </nav>
+        </header>
+        <!--Konec HEADER-ja-->
+
+        <!--Začetek kategorije VSEH receptov-->
+        <div id="content-wrap-all">
+            <div class="headline">
+                Recepti po <strong>kategorijah</strong>
+            </div>
+
+            <hr noshade class="content-hr">
+
+            <div class="category">
+                <ul>
+                    <h3 class="category-name">Glavna sestavina</h3>
+                    <li><a href="#">Meso</a></li>
+                    <li><a href="#">Morski sadeži</a></li>
+                    <li><a href="#">Testenine</a></li>
+                    <li><a href="#">Riž</a></li>
+                    <li><a href="#">Sadje</a></li>
+                    <li><a href="#">Zelenjava</a></li>
+                    <li><a href="#">Sir</a></li>
+                </ul>
+            </div>
+
+            <div class="category">
+                <ul>
+                    <h3 class="category-name">Tip jedi</h3>
+                    <li><a href="#">Pečenke</a></li>
+                    <li><a href="#">Solate</a></li>
+                    <li><a href="#">Juhe</a></li>
+                    <li><a href="#">Obare</a></li>
+                    <li><a href="#">Žar jedi</a></li>
+                </ul>
+            </div>
+            <div style="clear:both"></div>
+
+            <hr noshade class="content-hr">
+
+            <div id="all-recipes">
+                Vsi recepti v kategoriji <strong>x</strong>
+            </div>
+
+            {% for recept in vsi_receptki%}
+                <div class="recipe-box">
+                    <a href="{% url 'posamezen_recept' id=recept.id %}">
+                        <img class="recipe-box-picture" src="{{ recept.slika_recepta.url }}">
+                        <p>{{ recept.ime_recepta|truncatechars:33 }}</p>
+                    </a>
+                </div>
+
+            {% endfor %}
+            <div style="clear:both"></div>
+            <div class="pagination">
+                <span class="step-links">
+                    {% if vsi_receptki.has_previous %}
+                        <a id="previous" href="?page={{ vsi_receptki.previous_page_number }}">Prejšnja</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Stran {{ vsi_receptki.number }} od {{ vsi_receptki.paginator.num_pages }}.
+                    </span>
+
+                    {% if vsi_receptki.has_next %}
+                        <a id="next" href="?page={{ vsi_receptki.next_page_number }}">Naslednja</a>
+                    {% endif %}
+                </span>
+            </div>
+
+        </div>
+        <!--Konec kategorije VSEH receptov-->
+
+
+        <!--Začetek Noge-->
+        <footer>
+            <div id="footer-info">
+                <ul>
+                    <li><a href="#">O meni</a></li>
+                    <li><a href="#">Kontakt</a></li>
+                </ul>
+            </div>
+        </footer>
+        <!--Konec Noge-->
+    </body>
+</html>

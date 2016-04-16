@@ -1,0 +1,73 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <!DOCTYPE html>
+        <meta charset="utf-8">
+        <title>Obilna Žlica</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/stylesheet.css' %}">
+        <meta name="author" content="Gregor Novak">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+        <!--Začetek HEADER-ja-->
+        <header>
+            <nav>
+                <a href="{% url 'zadnji_recepti' %}" id="site-name"><strong>Obilna</strong> žlica</a>
+                <ul>
+                    <li><a href="{% url 'zadnji_recepti' %}">Domov</a></li>
+                    <li><a href="{% url 'vsi_recepti' %}">Vsi recepti</a></li>
+                    <!--<form>
+                        <input id="search" type="text" placeholder="Nom nom" required>
+                        <input id="button" type="button" value="Išči">
+                    </form>-->
+                </ul>
+            </nav>
+        </header>
+        <!--Konec HEADER-ja-->
+
+        <!--Posamezen recept-->
+        <div id="recipe-wrap">
+            <div id="full-recipe-name">
+                {{ recept.ime_recepta }}
+            </div>
+            <span id="recipe-date-full">
+                <span>{{ recept.datum_objave|date:"M, d Y" }}</span>
+            </span>
+            <div style="clear:both"></div>
+            <!--<hr noshade id="short-hr">-->
+            <div id="full-recipe">
+                <div id="recipe-instructions-full">
+                    <h3 class="category-name">Postopek</h3>
+                    <p>
+                        {{ recept.postopek_recepta|linebreaksbr }}
+                    </p>
+                </div>
+                <div id="recipe-ingredients-full">
+                    <h3 class="category-name">Sestavine</h3>
+                    <ul>
+                        <li>{{ recept.sestavine_recepta|linebreaksbr }}</li>
+                        <!--{% for s in sestavina %}
+                            <li>{{ s }}</li>
+                        {% endfor %}-->
+                    </ul>
+                </div>
+                <div style="clear:both;"></div>
+
+                <img id="full-recipe-img" src="{{ recept.slika_recepta.url }}">
+                <!--<h1>{{ recept.glavna_sestavina }}</h1>-->
+            </div>
+        </div>
+        <!--Konec posameznega recepta-->
+
+        <!--Začetek Noge-->
+        <footer>
+            <div id="footer-info">
+                <ul>
+                    <li><a href="#">O meni</a></li>
+                    <li><a href="#">Kontakt</a></li>
+                </ul>
+            </div>
+        </footer>
+        <!--Konec Noge-->
+    </body>
+</html>

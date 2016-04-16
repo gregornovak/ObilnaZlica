@@ -1,0 +1,109 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <!DOCTYPE html>
+        <meta charset="utf-8">
+        <title>Obilna Žlica</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/stylesheet.css' %}">
+        <meta name="author" content="Gregor Novak">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    </head>
+    <body>
+        <!--Začetek HEADER-ja-->
+        <header>
+            <nav>
+                <a href="{% url 'zadnji_recepti' %}" id="site-name"><strong>Obilna</strong> žlica</a>
+                <ul>
+                    <li><a href="{% url 'zadnji_recepti' %}">Domov</a></li>
+                    <li><a href="{% url 'vsi_recepti' %}">Vsi recepti</a></li>
+                    <!--<li>
+                        <form method="GET" action="">
+                            <input id="search" type="text" name="poizvedba" placeholder="Poišči recept..." value="{{ request.GET.poizvedba}}"/>
+                            <button id="button" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </form>
+                    </li>-->
+                </ul>
+            </nav>
+        </header>
+        <!--Konec HEADER-ja-->
+
+        <!--Začetek Receptov-->
+        <div id="content-wrap">
+
+            <div class="headline">
+                Nazadnje <strong>dodani</strong> recepti
+            </div>
+
+            <hr noshade class="content-hr">
+
+            <div id="recipe-info">
+                {% for recept in en_recept %}
+                <div id="recipe-name">
+
+                        <a href="{% url 'posamezen_recept' id=recept.id %}">{{ recept.ime_recepta }}</a>
+
+                </div>
+
+                <div id="recipe-date">
+                    <span>{{ recept.datum_objave|date:"M, d Y" }}</span>
+                </div>
+
+                <div style="clear:both"></div>
+
+            </div>
+
+            <div id="recipe-instructions">
+                <p>
+                <img class="float-left" src="{{ recept.slika_recepta.url }}">
+                {{ recept.postopek_recepta|linebreaksbr|truncatewords:95 }}
+                </p>
+                <a href="{% url 'posamezen_recept' id=recept.id %}" class="poglej-vec">Pojdi na recept</a>
+            </div>
+
+            <div id="recipe-ingredients">
+                <ul>
+                    <!--{% for s in sestavine_main %}
+                        <li>{{ s }}</li>
+                    {% endfor %}-->
+                    <li>{{ recept.sestavine_recepta|linebreaksbr|truncatewords:24 }}</li>
+                </ul>
+            </div>
+            {% endfor %}
+            <div style="clear:both"></div>
+
+            <hr noshade class="content-hr">
+
+            {% for recept in recepti %}
+            <div class="recipe-smaller">
+                <a href="{% url 'posamezen_recept' id=recept.id %}">
+                    <img class="smaller-pic" src="{{ recept.slika_recepta.url }}">
+                    <p>{{ recept.ime_recepta|truncatechars:33 }}</p>
+                </a>
+            </div>
+
+            {% endfor %}
+
+
+            <div style="clear:both"></div>
+
+            <!--<p>
+                {{ vsi_recepti }}
+            </p>-->
+        </div>
+        <!--Konec Receptov-->
+
+        <!--Začetek Noge-->
+        <footer>
+            <div id="footer-info">
+                <ul>
+                    <li><a href="#">O meni</a></li>
+                    <li><a href="#">Kontakt</a></li>
+                </ul>
+            </div>
+        </footer>
+        <!--Konec Noge-->
+    </body>
+</html>

@@ -1,0 +1,12 @@
+Include
+Lib
+Scripts
+pip-selfcheck.json
+__pycache__
+*.pyc
+db.sqlite3
+README.md
+bin
+include
+lib
+lib64
